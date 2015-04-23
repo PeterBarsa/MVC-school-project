@@ -1,0 +1,22 @@
+﻿@model IEnumerable<DatingSite_Projekt.Models.FriendRequestModel>
+@{
+    ViewBag.Title = "FriendRequests";
+    Layout = "~/Views/Shared/_LayoutAccount.cshtml";
+}
+
+<h2>FriendRequests</h2>
+<script type="text/javascript">
+
+    $(document).on('click', '#add', function () {
+        var senderId = document.getElementById('add').value;
+        $.post('/api/friend/AcceptFriendReqest', { senderId: senderId }, function () {
+            alert("Friendrequest accepted");
+            window.location.reload();
+        });
+
+        })</script>
+<ul>
+    @foreach (var user in Model)
+    {
+    <li> @Html.ActionLink(@user.senderName, "Details", "Account", new { id = @user.senderId }, null) <button id="add" value="@user.senderId">Add Friend</button> </li>}
+</ul>

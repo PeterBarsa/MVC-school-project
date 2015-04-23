@@ -1,0 +1,73 @@
+﻿@model DatingSite_Projekt.Models.AccountUserModel
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_LayoutAccount.cshtml";
+    var message = ViewData["UploadMessage"] as string;
+    var success = ViewData["Success"] as string;
+}
+
+<h2>Edit info</h2>
+
+
+@using (@Html.BeginForm("Edit", "Account"))
+{
+    if(success != null)
+    { <p> @success </p>}
+    <br/>
+    @Html.DisplayNameFor(x => x.Description)
+    @Html.TextAreaFor(x => x.Description, new { @class = "form-control" })
+    @Html.ValidationMessageFor(x=>x.Description)
+
+    <br />
+    @Html.DisplayNameFor(x => x.AboutMe)
+    @Html.TextAreaFor(x => x.AboutMe, new { @class = "form-control" })
+    @Html.ValidationMessageFor(x=>x.AboutMe)
+
+    <br />
+    @Html.DisplayNameFor(x => x.Age)
+    @Html.TextBoxFor(x => x.Age, new { @class = "form-control" , @placeholder = "Only Numbers"})
+    @Html.ValidationMessageFor(x=>x.Age)
+    
+    <br />
+    @Html.DisplayNameFor(x => x.Country)
+    @Html.TextBoxFor(x => x.Country, new { @class = "form-control" })
+    @Html.ValidationMessageFor(x=>x.Country)
+
+    <br />
+    @Html.DisplayNameFor(x => x.City)
+    @Html.TextBoxFor(x => x.City, new { @class = "form-control" })
+    @Html.ValidationMessageFor(x=>x.City)
+    
+    <br />
+    @Html.DisplayNameFor(x => x.Email)
+    @Html.TextBoxFor(x => x.Email, new { @class = "form-control" })
+    @Html.ValidationMessageFor(x=>x.Email)
+    <br/>
+    @Html.DisplayNameFor(x => x.Searchable)
+    @Html.CheckBoxFor(x => x.Searchable)
+    <br />
+    <input type="submit" value="Save Changes" class="btn btn-primary" />
+
+
+}
+
+
+
+<br />
+
+@if (message != null)
+{
+    <p>@message</p>
+}
+
+
+
+
+@using (Html.BeginForm("UploadImage", "Account", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <label for="file">Upload a new display picture: </label>
+    <input type="file" name="file" id="file" style="width: 100%;" />
+    <br />
+    <input type="submit" value="Upload" class="btn btn-primary" />
+}

@@ -1,0 +1,20 @@
+﻿@model DatingSite_Projekt.Models.SearchModel
+
+@{
+    ViewBag.Title = "SearchUsers";
+    Layout = "~/Views/Shared/_LayoutAccount.cshtml";
+}
+
+<h2>Search Users</h2>
+<div class="container">
+    <div class="row">
+        <div class="search">
+            @using (@Html.BeginForm("SearchUsers", "Account"))
+            {
+
+                @Html.TextBoxFor(x => x.Username, new { @class = "form-control" })
+                <br />
+                <button type="submit" class="btn btn-primary">Search</button> }
+        </div>
+    </div>
+</div>

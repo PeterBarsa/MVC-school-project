@@ -1,0 +1,45 @@
+﻿@using System.Web.UI.WebControls
+@model DatingSite_Projekt.Models.RegisterModel
+@{
+    ViewBag.Title = "Register";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Register a new account</h2>
+
+@using (@Html.BeginForm("Register", "Home"))
+{
+    
+    
+
+    <br />
+    <div id="register">
+        @Html.DisplayNameFor(x => x.Username)
+        @Html.TextBoxFor(x => x.Username, new { @class = "form-control" })
+        @Html.ValidationSummary(true)
+        <br />
+        @Html.DisplayNameFor(x => x.Password)
+        @Html.TextBoxFor(x => x.Password, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x=>x.Password)
+        <br />
+        @Html.DisplayNameFor(x => x.Email)
+        @Html.TextBoxFor(x => x.Email, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x=>x.Email)
+        <br />
+    </div>
+    <div>
+        @Html.DisplayNameFor(x => x.Country)
+        @Html.TextBoxFor(x => x.Country, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.Country)
+        <br />
+        @Html.DisplayNameFor(x => x.City)
+        @Html.TextBoxFor(x => x.City, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.City)
+        <br />
+        @Html.DisplayNameFor(x => x.Age)
+        @Html.TextBoxFor(x => x.Age, new { @class = "form-control", @placeholder = "Only Numbers"})
+        @Html.ValidationMessageFor(x=>x.Age)
+        <br />
+        <input type="submit" class="btn btn-primary" value="Submit" />
+    </div>
+}

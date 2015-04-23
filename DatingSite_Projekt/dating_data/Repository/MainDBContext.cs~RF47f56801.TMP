@@ -1,0 +1,20 @@
+namespace Dating_data.Repository
+{
+    using System;
+    using System.Data.Entity;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Linq;
+
+    public partial class MainDBContext : DbContext
+    {
+        public MainDBContext()
+            : base("name=MainDBContext")
+        {
+        }
+
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+        }
+    }
+}

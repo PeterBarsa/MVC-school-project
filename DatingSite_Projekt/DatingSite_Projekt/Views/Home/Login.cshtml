@@ -1,0 +1,46 @@
+﻿@model DatingSite_Projekt.Models.HomeLoginModel
+@using System.Reflection
+@using System.Web.UI.WebControls
+@using DatingSite_Projekt.Resources
+
+
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<h1 id="header"> @login.Login </h1>
+
+@using (@Html.BeginForm("Login", "Home"))
+{
+    
+    @Html.ValidationSummary(true)
+    <br />
+    <label id="username">@login.Username</label>
+    @Html.TextBoxFor(x => x.Username, new { @class = "form-control" })
+    @Html.ValidationMessageFor(x=>x.Username)
+    <br />
+    <label id="password">@login.Password</label>
+    @Html.PasswordFor(x => x.Password, new { @class = "form-control" })
+    @Html.ValidationMessageFor(x=> x.Password)
+    <br />
+    <input type="submit" value="@login.Button" class="btn btn-primary" />
+}
+
+<br />
+<a href="@Url.Action("ChangeCulture", "Home", new { language = "sv" }, null)">
+    <button class=" btn btn-primary">@login.ChangeLangSv</button>
+</a>
+
+<a href="@Url.Action("ChangeCulture", "Home", new { language = "en" }, null)">
+    <button class=" btn btn-primary">@login.ChangeLangEn</button>
+</a>
+
+<script type="text/javascript">
+    $(document).ready(
+$('#svenska').on("click", function () {
+    ;
+}))
+</script>
+

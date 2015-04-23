@@ -1,0 +1,15 @@
+﻿@model IEnumerable<DatingSite_Projekt.Models.SearchModel>
+@{
+    ViewBag.Title = "SearchUserResult";
+    Layout = "~/Views/Shared/_LayoutAccount.cshtml";
+}
+
+<h2>SearchUserResult</h2>
+
+
+<ul>
+    @foreach(var user in Model)
+    { <li> @Html.ActionLink(@user.Username, "Details", "Account", new{ id = @user.UserId}, null) </li>}
+</ul>
+
+

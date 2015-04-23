@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="f1b2d74c378a4153a5d45145beeb5173" Name="Diagram1" >
+        <EntityTypeShape EntityType="MainDBModel.Description" Width="1.5" PointX="3" PointY="4" />
+        <EntityTypeShape EntityType="MainDBModel.Friend" Width="1.5" PointX="3" PointY="1.125" />
+        <EntityTypeShape EntityType="MainDBModel.User" Width="1.5" PointX="0.75" PointY="2.75" />
+        <AssociationConnector Association="MainDBModel.FK__Descripti__UserI__0697FACD" />
+        <AssociationConnector Association="MainDBModel.User1" />
+        <AssociationConnector Association="MainDBModel.User2" />
+        <EntityTypeShape EntityType="MainDBModel.Message" Width="1.5" PointX="3" PointY="8" />
+        <AssociationConnector Association="MainDBModel.ReceiverId" />
+        <AssociationConnector Association="MainDBModel.SenderId" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

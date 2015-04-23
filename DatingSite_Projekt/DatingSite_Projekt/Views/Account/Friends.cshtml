@@ -1,0 +1,16 @@
+﻿@using System.Web.Mvc.Html
+@model IEnumerable<DatingSite_Projekt.Models.FriendsModel>
+
+@{
+    ViewBag.Title = "Friends";
+    Layout = "~/Views/Shared/_LayoutAccount.cshtml";
+}
+
+
+<h2>Friends</h2>
+
+@foreach (var friend in Model)
+{
+    { <li> @Html.ActionLink(@friend.Username, "Details", "Account", new { id = @friend.Id }, null) </li>}
+}
+

@@ -1,0 +1,139 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="MainDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="MainDBContext" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Descriptions" EntityType="MainDBModel.Description" />
+    <EntitySet Name="Friends" EntityType="MainDBModel.Friend" />
+    <EntitySet Name="Users" EntityType="MainDBModel.User" />
+    <AssociationSet Name="FK__Descripti__UserI__0697FACD" Association="MainDBModel.FK__Descripti__UserI__0697FACD">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Description" EntitySet="Descriptions" />
+    </AssociationSet>
+    <AssociationSet Name="User1" Association="MainDBModel.User1">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Friend" EntitySet="Friends" />
+    </AssociationSet>
+    <AssociationSet Name="User2" Association="MainDBModel.User2">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Friend" EntitySet="Friends" />
+    </AssociationSet>
+    <EntitySet Name="Messages" EntityType="MainDBModel.Message" />
+    <AssociationSet Name="ReceiverId" Association="MainDBModel.ReceiverId">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Message" EntitySet="Messages" />
+    </AssociationSet>
+    <AssociationSet Name="SenderId" Association="MainDBModel.SenderId">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Message" EntitySet="Messages" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Description">
+    <Key>
+      <PropertyRef Name="DescriptionId" />
+    </Key>
+    <Property Name="DescriptionId" Type="Int32" Nullable="false" />
+    <Property Name="Description1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="City" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Country" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="AboutMe" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="Age" Type="Int32" />
+    <NavigationProperty Name="User" Relationship="MainDBModel.FK__Descripti__UserI__0697FACD" FromRole="Description" ToRole="User" />
+  </EntityType>
+  <EntityType Name="Friend">
+    <Key>
+      <PropertyRef Name="FriendId" />
+    </Key>
+    <Property Name="User1" Type="Int32" Nullable="false" />
+    <Property Name="User2" Type="Int32" Nullable="false" />
+    <Property Name="FriendId" Type="Int32" Nullable="false" />
+    <Property Name="status" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="User" Relationship="MainDBModel.User1" FromRole="Friend" ToRole="User" />
+    <NavigationProperty Name="User3" Relationship="MainDBModel.User2" FromRole="Friend" ToRole="User" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="Username" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="true" />
+    <Property Name="Password" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="true" />
+    <Property Name="Searchable" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Descriptions" Relationship="MainDBModel.FK__Descripti__UserI__0697FACD" FromRole="User" ToRole="Description" />
+    <NavigationProperty Name="Friends" Relationship="MainDBModel.User1" FromRole="User" ToRole="Friend" />
+    <NavigationProperty Name="Friends1" Relationship="MainDBModel.User2" FromRole="User" ToRole="Friend" />
+    <NavigationProperty Name="Messages" Relationship="MainDBModel.ReceiverId" FromRole="User" ToRole="Message" />
+    <NavigationProperty Name="Messages1" Relationship="MainDBModel.SenderId" FromRole="User" ToRole="Message" />
+  </EntityType>
+  <Association Name="FK__Descripti__UserI__0697FACD">
+    <End Type="MainDBModel.User" Role="User" Multiplicity="1" />
+    <End Type="MainDBModel.Description" Role="Description" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Description">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="User1">
+    <End Type="MainDBModel.User" Role="User" Multiplicity="1" />
+    <End Type="MainDBModel.Friend" Role="Friend" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Friend">
+        <PropertyRef Name="User1" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="User2">
+    <End Type="MainDBModel.User" Role="User" Multiplicity="1" />
+    <End Type="MainDBModel.Friend" Role="Friend" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Friend">
+        <PropertyRef Name="User2" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Message">
+    <Key>
+      <PropertyRef Name="MessageId" />
+    </Key>
+    <Property Name="MessageId" Type="Int32" Nullable="false" />
+    <Property Name="SenderId" Type="Int32" Nullable="false" />
+    <Property Name="ReceiverId" Type="Int32" Nullable="false" />
+    <Property Name="Messages" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="User" Relationship="MainDBModel.ReceiverId" FromRole="Message" ToRole="User" />
+    <NavigationProperty Name="User1" Relationship="MainDBModel.SenderId" FromRole="Message" ToRole="User" />
+  </EntityType>
+  <Association Name="ReceiverId">
+    <End Type="MainDBModel.User" Role="User" Multiplicity="1" />
+    <End Type="MainDBModel.Message" Role="Message" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Message">
+        <PropertyRef Name="ReceiverId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="SenderId">
+    <End Type="MainDBModel.User" Role="User" Multiplicity="1" />
+    <End Type="MainDBModel.Message" Role="Message" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Message">
+        <PropertyRef Name="SenderId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

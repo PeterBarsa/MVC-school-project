@@ -1,0 +1,28 @@
+﻿@model DatingSite_Projekt.Models.AccountUserInfoModel
+@{
+    ViewBag.Title = "EditUserInfo";
+    Layout = "~/Views/Shared/_LayoutAccount.cshtml";
+}
+
+<h2>EditUserInfo</h2>
+
+
+@using (@Html.BeginForm("EditUserInfo", "Account"))
+{
+
+    @Html.ValidationSummary(true)
+    <br/>
+    @Html.DisplayNameFor(x => x.NewPassword)
+    @Html.TextBoxFor(x => x.NewPassword, new { @class = "form-control" })
+    @Html.ValidationMessageFor(x=> x.NewPassword)
+    <br />
+    @Html.DisplayNameFor(x => x.NewUsername)
+    @Html.TextBoxFor(x => x.NewUsername, new { @class = "form-control" })
+    @Html.ValidationMessageFor(x=>x.NewUsername)
+    <br />
+    @Html.DisplayNameFor(x => x.OldPassword)
+    @Html.PasswordFor(x => x.OldPassword, new { @class = "form-control" })
+    @Html.ValidationMessageFor(x=>x.OldPassword)
+    <br />
+    <input type="submit" value="Submit changes" class="btn btn-primary" />
+}

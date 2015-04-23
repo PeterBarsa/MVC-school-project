@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30501.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatingSite_Projekt", "DatingSite_Projekt\DatingSite_Projekt.csproj", "{795DB075-12B0-4173-9F6D-C97BBCB235DA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dating_data", "Dating_data\Dating_data.csproj", "{5BE9E582-36C5-4599-8894-2A1A3B8C6182}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{795DB075-12B0-4173-9F6D-C97BBCB235DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{795DB075-12B0-4173-9F6D-C97BBCB235DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{795DB075-12B0-4173-9F6D-C97BBCB235DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{795DB075-12B0-4173-9F6D-C97BBCB235DA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5BE9E582-36C5-4599-8894-2A1A3B8C6182}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5BE9E582-36C5-4599-8894-2A1A3B8C6182}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5BE9E582-36C5-4599-8894-2A1A3B8C6182}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5BE9E582-36C5-4599-8894-2A1A3B8C6182}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
