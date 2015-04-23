@@ -5,31 +5,33 @@ using System.Runtime.Remoting.Contexts;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms.VisualStyles;
 
 namespace Dating_data.Repository
 {
     public class UserRepositories
     {
 
-        //skapar en metod för att hämta alla tillgängliga användare i databasen
         public static List<User> GetUsers()
         {
             using (var context = new MainDBContext())
             {
 
-                //skapar en lista sorterad enligt id'na av databasens Users tabell
-                var result = context.Users
-                   
-                    .OrderBy(x => x.Id)
-                    .ToList();
+                var result = context.Users.OrderBy(x => x.Id).ToList();
 
-                //returnerar listan
                 return result;
 
             }
         }
 
-        //metod som returnerar en användares användarnamn baserat på id't som skickas med i parametern
+        private static User GetUser(int? userId)
+        {
+            using (var context = new MainDBContext())
+            {
+                return context.Users.FirstOrDefault(x => x.Id.Equals(userId));
+            }
+        }
+
         public static string GetUserName(int id)
         {
             using (var context = new MainDBContext())
@@ -48,33 +50,26 @@ namespace Dating_data.Repository
             }
         }
 
-        //en metod som hämtar en specifik användares lösenord, skickar med en användares id som parameter
         public static string GetPasswordForUser(int userId)
         {
             using (var context = new MainDBContext())
             {
 
-                // använder id't för att hämta ut användaren där id't matchar.
-                var user = context.Users.FirstOrDefault(x => x.Id == userId);
+                var user = GetUser(userId);
 
-                //returnerar användarens lösenord.
                 return user.Password;
             }
         }
 
-        //metod som sparar alla förändringar gjorda för en användare, tar emot lösenord, användarnamn och id som parameter.
         public static void SetUserChanges(string password, string username, int userId)
         {
             using (var context = new MainDBContext())
             {
-                //skapar en variabel av användaren där id't passar in
-                var user = context.Users.FirstOrDefault(x => x.Id == userId);
 
-                //fyller i den nya informationen
+                var user = GetUser(userId);
                 user.Password = password;
                 user.Username = username;
 
-                //sparar förändringarna
                 context.SaveChanges();
             }
         }
@@ -84,7 +79,7 @@ namespace Dating_data.Repository
         {
             using (var context = new MainDBContext())
             {
-                var user = context.Users.FirstOrDefault(x => x.Id == userId);
+                var user = GetUser(userId);
                 user.Password = username;
                 context.SaveChanges();
             }
@@ -95,15 +90,12 @@ namespace Dating_data.Repository
         {
             using (var context = new MainDBContext())
             {
-                //hämtar ut användaren vars id är medskickat och sätter värdet searchable till parametern searchable's värde och sparar
-                //sedan förändringarna.
-                var user = context.Users.FirstOrDefault(x => x.Id == userId);
+                var user = GetUser(userId);
                 user.Searchable = searchable;
                 context.SaveChanges();
             }
         }
 
-        //metod för att lägga till en ny användare, nästan all information som ska införas skickas med i parametrarna.
         public static void AddNewUser(string username, string password, string city, string country, string email, int age,int id)
         {
 
@@ -113,17 +105,12 @@ namespace Dating_data.Repository
                 //skapar två variabler, en som ska införas i tabellen Users och en i Descriptions
                 var user = new User();
                 var description = new Description();
-                //Lägger till informationen för Users tabellen i variabeln user som skapades och lägger till den
-                //i databasen(inga förändringar sparade än)
                 user.Username = username;
                 user.Password = password;
-                //skapar ett id som aldrig kommer krocka med en tidigare användare
                 user.Id = GetUsers().Count + 1;
                 user.Searchable = true;
                 context.Users.Add(user);
 
-                //Lägger till informationen för Descriptions tabellen i variabeln description som skapades 
-                //och lägger till den i databasen(inga förändringar sparade än) samt ett autoId skapas för beskrivningen
                 description.DescriptionId = DescriptionRepository.GetDescriptions().Count + 1;
                 description.UserId = user.Id;
                 description.City = city;
@@ -132,7 +119,6 @@ namespace Dating_data.Repository
                 description.Age = age;
                 context.Descriptions.Add(description);
 
-                //förändringarna i databasen sparas
                 context.SaveChanges();
             }
         }

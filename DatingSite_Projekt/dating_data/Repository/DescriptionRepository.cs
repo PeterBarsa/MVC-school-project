@@ -11,8 +11,7 @@ namespace Dating_data.Repository
 {
     public class DescriptionRepository
     {
-        //metod för att hämta beskrivning på en särskildanvändare, tar emot en nullable int som parameter som matchar
-        //användarens id som man vill hämta beskrivningen åt.
+
         public static Description GetDescription(int? userId)
         {
             using (var context = new MainDBContext())
@@ -23,13 +22,11 @@ namespace Dating_data.Repository
             }
         }
 
-        //metod för att införa en ny beskrivning för en användare, tar emt alla värden var för sig i parametrar
         public static void InsertNewDescription(string description, string aboutMe, string country, string city, string email, int? age, int userId)
         {
             using (var context = new MainDBContext())
             {
-                //skapar en variabel för en användares description där id't som skickats med som parameter matchar in i databasen.
-                //fyller sedan i all information man fått från parametrarna där dem ska sitta i tabellen för användaren
+               
                 Description desc = context.Descriptions.FirstOrDefault(x => x.UserId == userId);
                 desc.Description1 = description;
                 desc.AboutMe = aboutMe;
@@ -38,7 +35,6 @@ namespace Dating_data.Repository
                 desc.Email = email;
                 desc.Age = age;
 
-                //sparar sedan förändringarna i databasen.
                 context.SaveChanges();
             }
         }
