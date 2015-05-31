@@ -4,17 +4,13 @@
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var profile1ImagePath = @Model.ElementAt(0).Username + ".jpg";
-    var profile2ImagePath = @Model.ElementAt(1).Username + ".jpg";
-    var profile3ImagePath = @Model.ElementAt(2).Username + ".jpg";
-    var profile4ImagePath = @Model.ElementAt(3).Username + ".jpg";
 }
 <br />
 <!-- Page Content -->
 <div class="container">
 
     <!-- Jumbotron Header -->
-    <header class="jumbotron hero-spacer">
+    <header class="jumbotron">
         <h1>Welcome to DatingSite!</h1>
         <p>Get ready to find the partner of a lifetime. Register today to get access to all our super hot and ambitious singles!</p>
         <p>
@@ -33,57 +29,22 @@
     <!-- Page Features -->
     <div class="row text-center">
 
-        <div class="col-md-3 col-sm-6 hero-feature">
-            <div class="thumbnail">
-                <img src="/Images/Profile/@profile1ImagePath" class="img-rounded" alt="">
-                <div class="caption">
-                    <h3>@Model.ElementAt(0).Username, @Model.ElementAt(0).Age</h3>
-                    <p>@Model.ElementAt(0).AboutMe</p>
-                    <p>
-                        <a href="/account/Details/@Model.ElementAt(0).UserId" class="btn btn-primary">Go to profile</a>
-                    </p>
+        @foreach (var u in @Model)
+        {
+            var profileImagePath = @u.Username + ".jpg";
+            <div class="col-md-3 col-sm-6">
+                <div class="thumbnail">
+                    <img src="/Images/Profile/@profileImagePath" class="img-rounded" alt="">
+                    <div class="caption">
+                        <h3> @u.Username, @u.Age</h3>
+                        <p>@u.AboutMe</p>
+                        <p>
+                            <a href="/account/Details/@u.UserId" class="btn btn-primary">Go to profile</a>
+                        </p>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="col-md-3 col-sm-6 hero-feature">
-            <div class="thumbnail">
-                <img src="/Images/Profile/@profile2ImagePath" class="img-rounded" alt="">
-                <div class="caption">
-                    <h3>@Model.ElementAt(1).Username, @Model.ElementAt(1).Age</h3>
-                    <p>@Model.ElementAt(1).AboutMe</p>
-                    <p>
-                        <a href="/account/Details/@Model.ElementAt(1).UserId" class="btn btn-primary">Go to profile</a>
-                    </p>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-3 col-sm-6 hero-feature">
-            <div class="thumbnail">
-                <img src="/Images/Profile/@profile3ImagePath" class="img-rounded" alt="">
-                <div class=" caption">
-                    <h3>@Model.ElementAt(2).Username, @Model.ElementAt(2).Age</h3>
-                    <p>@Model.ElementAt(2).AboutMe</p>
-                    <p>
-                        <a href="/account/Details/@Model.ElementAt(2).UserId" class="btn btn-primary">Go to profile</a>
-                    </p>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-3 col-sm-6 hero-feature">
-            <div class="thumbnail">
-                <img src="/Images/Profile/@profile4ImagePath" class="img-rounded" alt="">
-                <div class="caption">
-                    <h3>@Model.ElementAt(3).Username, @Model.ElementAt(3).Age</h3>
-                    <p>@Model.ElementAt(3).AboutMe</p>
-                    <p>
-                        <a href="/account/Details/@Model.ElementAt(3).UserId" class="btn btn-primary">Go to profile</a>
-                    </p>
-                </div>
-            </div>
-        </div>
-
+        }
     </div>
 </div>

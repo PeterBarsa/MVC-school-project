@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+using DatingSite_Projekt.Helpers;
 using DatingSite_Projekt.Models;
 using DatingSite_Projekt.Resources;
 using Dating_data.Repository;
@@ -21,20 +22,21 @@ namespace DatingSite_Projekt.Controllers
             var frontList = new List<AccountUserModel>();
             var r = new Random();
             var added = new List<int>();
-            var i = frontList.Count;
-            while(i < 4)
+
+            //loopar igenom tills 4 olika användare har hämtats som skickas till vyn
+            do
             {
-                
+
                 var user = userList[r.Next(userList.Count)];
                 if (added.Contains(user.Id))
                 {
-                    
+                    //gör inget ifall det finns så loopen fortsätter
                 }
                 else
                 {
 
                     var descriptionForUser = DescriptionRepository.GetDescription(user.Id);
-                    var userModel = new AccountUserModel()
+                    var userModel = new AccountUserModel
                     {
                         Username = user.Username,
                         AboutMe = descriptionForUser.AboutMe,
@@ -43,9 +45,9 @@ namespace DatingSite_Projekt.Controllers
                     };
                     frontList.Add(userModel);
                     added.Add(user.Id);
-                    i++;
                 }
-            }
+            } 
+            while (frontList.Count < 4);
             return View(frontList);
         }
 
@@ -97,13 +99,10 @@ namespace DatingSite_Projekt.Controllers
 
             //loopar igenom comparisonlistan och jämför alla användarnamn och kollar så att användarnamnen är unika
             //ifall användarnamnet redan finns blir man skickad tillbaka till vyn med ett felmeddelande.
-            foreach (var user in comparison)
+            if (comparison.Any(user => user.Username.Equals(model.Username)))
             {
-                if (user.Username.Equals(model.Username))
-                {
-                    ModelState.AddModelError("", "Username already exists!");
-                    return View(model);
-                }
+                ModelState.AddModelError("", English.User_Exists);
+                return View(model);
             }
 
             UserRepositories.AddNewUser(model.Username, model.Password, model.City, model.Country, model.Email, model.Age, model.Id);

@@ -1,5 +1,4 @@
-﻿@using System.Activities
-@model DatingSite_Projekt.Models.AccountUserModel
+﻿@model AccountUserModel
 @using DatingSite_Projekt.Models
 
 
@@ -23,15 +22,14 @@
    
     $(document).on('click', '#btnAdd', function () {
 
-        var sendStatus = 1;
+        
         var senderId = '@senderId';
         var receiverId = '@receiverId';
         var message = document.getElementById('userComment').value;
         if (message.length <= 0) {
             alert("You have to enter a message");
-            sendStatus = 0;
         }
-        if(sendStatus === 1) {
+        else {
             $.post('/api/message/PostMessageDetails', { message: message, senderId: senderId, receiverId: receiverId }, function () {
                 alert("Your message has been posted!");
                 window.location.reload();
@@ -83,13 +81,13 @@
 
 
         <div class="input-group">
-            <input type="text" id="userComment" class="form-control input-sm chat-input" placeholder="Write your message here..." />
-            <span class="input-group-btn" onclick="addComment()">
+            <input type="text" id="userComment" class="form-control input-sm" placeholder="Write your message here..." />
+            <span class="input-group-btn">
                 <button id="btnAdd" class="btn btn-primary btn-sm">Add</button>
             </span>
         </div>
         <hr data-brackets-id="12673">
-        <ul data-brackets-id="12674" id="sortable" class="list-unstyled ui-sortable">
+        <ul data-brackets-id="12674" id="sortable" class="list-unstyled">
             @if (messages.Count() >= 0)
             {
                 foreach (var m in messages)

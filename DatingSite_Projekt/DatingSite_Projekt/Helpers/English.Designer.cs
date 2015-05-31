@@ -68,5 +68,14 @@ namespace DatingSite_Projekt.Helpers {
                 return ResourceManager.GetString("Header", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Username already exists!.
+        /// </summary>
+        internal static string User_Exists {
+            get {
+                return ResourceManager.GetString("User_Exists", resourceCulture);
+            }
+        }
     }
 }

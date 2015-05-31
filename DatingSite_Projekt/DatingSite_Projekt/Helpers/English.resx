@@ -120,4 +120,7 @@
   <data name="Header" xml:space="preserve">
     <value>"Hej"</value>
   </data>
+  <data name="User_Exists" xml:space="preserve">
+    <value>Username already exists!</value>
+  </data>
 </root>
