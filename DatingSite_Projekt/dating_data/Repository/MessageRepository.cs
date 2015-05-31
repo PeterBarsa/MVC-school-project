@@ -37,12 +37,12 @@ namespace Dating_data.Repository
         {
             using (var context = new MainDBContext())
             {
-                var dbmessage = new Message {Messages = message, SenderId = sId, ReceiverId = rId};
-
-                //slaåar en lista av alla id'n i Messages, räknar upp dem och lägger till +1 och skapar således hela tiden ett nytt 
-                //meddelande id.
-                var idLista = context.Messages.Select(x => x.ReceiverId).ToList();
-                dbmessage.MessageId = idLista.Count() + 1;
+                var dbmessage = new Message
+                {
+                    Messages = message,
+                    SenderId = sId,
+                    ReceiverId = rId
+                };
 
                 context.Messages.Add(dbmessage);
                 context.SaveChanges();

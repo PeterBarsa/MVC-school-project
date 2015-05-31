@@ -59,3 +59,4 @@ C:\Users\Peter\Documents\GitHub\MVC-school-project\DatingSite_Projekt\Dating_dat
 C:\Users\Peter\Documents\GitHub\MVC-school-project\DatingSite_Projekt\Dating_data\bin\Debug\System.Web.WebPages.Razor.xml
 C:\Users\Peter\Documents\GitHub\MVC-school-project\DatingSite_Projekt\Dating_data\obj\Debug\Dating_data.dll
 C:\Users\Peter\Documents\GitHub\MVC-school-project\DatingSite_Projekt\Dating_data\obj\Debug\Dating_data.pdb
+C:\Users\Peter\Documents\GitHub\MVC-school-project\DatingSite_Projekt\Dating_data\obj\Debug\Dating_data.csprojResolveAssemblyReference.cache

@@ -27,7 +27,7 @@ namespace Dating_data.Repository
     
         public virtual DbSet<Description> Descriptions { get; set; }
         public virtual DbSet<Friend> Friends { get; set; }
-        public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Message> Messages { get; set; }
+        public virtual DbSet<User> Users { get; set; }
     }
 }

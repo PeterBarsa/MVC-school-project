@@ -16,7 +16,37 @@ namespace DatingSite_Projekt.Controllers
         
         public ActionResult Index()
         {
-            return View();
+
+            var userList = UserRepositories.GetUsers();
+            var frontList = new List<AccountUserModel>();
+            var r = new Random();
+            var added = new List<int>();
+            var i = frontList.Count;
+            while(i < 4)
+            {
+                
+                var user = userList[r.Next(userList.Count)];
+                if (added.Contains(user.Id))
+                {
+                    
+                }
+                else
+                {
+
+                    var descriptionForUser = DescriptionRepository.GetDescription(user.Id);
+                    var userModel = new AccountUserModel()
+                    {
+                        Username = user.Username,
+                        AboutMe = descriptionForUser.AboutMe,
+                        Age = descriptionForUser.Age ?? default(int),
+                        UserId = user.Id
+                    };
+                    frontList.Add(userModel);
+                    added.Add(user.Id);
+                    i++;
+                }
+            }
+            return View(frontList);
         }
 
         public ActionResult Login()

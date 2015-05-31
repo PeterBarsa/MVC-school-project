@@ -22,19 +22,18 @@ namespace Dating_data.Repository
             }
         }
 
-        public static void InsertNewDescription(string description, string aboutMe, string country, string city, string email, int? age, int userId)
+        public static void InsertNewDescription(Description d)
         {
             using (var context = new MainDBContext())
             {
                
-                Description desc = context.Descriptions.FirstOrDefault(x => x.UserId == userId);
-                desc.Description1 = description;
-                desc.AboutMe = aboutMe;
-                desc.Country = country;
-                desc.City = city;
-                desc.Email = email;
-                desc.Age = age;
-
+                var desc = context.Descriptions.FirstOrDefault(x => x.UserId == d.UserId);
+                desc.Description1 = d.Description1;
+                desc.AboutMe = d.AboutMe;
+                desc.Country = d.Country;
+                desc.City = d.City;
+                desc.Email = d.Email;
+                desc.Age = d.Age;
                 context.SaveChanges();
             }
         }

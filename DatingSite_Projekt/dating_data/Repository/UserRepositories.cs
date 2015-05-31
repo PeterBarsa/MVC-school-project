@@ -28,7 +28,7 @@ namespace Dating_data.Repository
         {
             using (var context = new MainDBContext())
             {
-                return context.Users.FirstOrDefault(x => x.Id.Equals(userId));
+                return context.Users.FirstOrDefault(x => x.Id == userId);
             }
         }
 
@@ -61,14 +61,14 @@ namespace Dating_data.Repository
             }
         }
 
-        public static void SetUserChanges(string password, string username, int userId)
+        public static void SetUserChanges(User u)
         {
             using (var context = new MainDBContext())
             {
 
-                var user = GetUser(userId);
-                user.Password = password;
-                user.Username = username;
+                var user = GetUser(u.Id);
+                user.Password = u.Password;
+                user.Username = u.Username;
 
                 context.SaveChanges();
             }
@@ -102,21 +102,26 @@ namespace Dating_data.Repository
             using (var context = new MainDBContext())
             {
 
-                //skapar två variabler, en som ska införas i tabellen Users och en i Descriptions
-                var user = new User();
-                var description = new Description();
-                user.Username = username;
-                user.Password = password;
-                user.Id = GetUsers().Count + 1;
-                user.Searchable = true;
-                context.Users.Add(user);
+                //skapar två objekt, en som ska införas i tabellen Users och en i Descriptions
+                
+                var user = new User
+                {
+                    Username = username,
+                    Password = password,
+                    Searchable = true
+                };
 
-                description.DescriptionId = DescriptionRepository.GetDescriptions().Count + 1;
-                description.UserId = user.Id;
-                description.City = city;
-                description.Country = country;
-                description.Email = email;
-                description.Age = age;
+
+                var description = new Description
+                {
+                    UserId = user.Id,
+                    City = city,
+                    Country = country,
+                    Email = email,
+                    Age = age
+                };
+
+                context.Users.Add(user);
                 context.Descriptions.Add(description);
 
                 context.SaveChanges();

@@ -45,5 +45,7 @@ namespace DatingSite_Projekt.Models
         [Required(ErrorMessage = "Cannot be empty!")]
         [Display(Name = "City: ")]
         public string City { get; set; }
+
+        public int? UserId { get; set; }
     }
 }

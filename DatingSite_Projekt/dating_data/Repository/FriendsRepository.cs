@@ -15,7 +15,7 @@ namespace Dating_data.Repository
         {
             using (var context = new MainDBContext())
             {
-                List<Friend> friendRequestList = new List<Friend>(context.Friends.Where(x => x.User2 == userId).Select(x => x));
+                var friendRequestList = new List<Friend>(context.Friends.Where(x => x.User2 == userId).Select(x => x));
                 List<Friend> result = new List<Friend>();
 
                 foreach (var f in friendRequestList)
@@ -95,8 +95,7 @@ namespace Dating_data.Repository
                 {
                     User1 = senderId,
                     User2 = receiverId,
-                    status = false,
-                    FriendId = currentRequestList.Count() + 1
+                    status = false
                 };
 
                 //loopar igenom listan med nuvarande vänner/förfrågningar

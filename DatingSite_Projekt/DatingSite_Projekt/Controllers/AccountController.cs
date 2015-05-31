@@ -7,7 +7,6 @@ using System.Web;
 using System.Web.Configuration;
 using System.Web.Mvc;
 using System.Web.Security;
-using System.Windows.Forms;
 using DatingSite_Projekt.Helpers;
 using DatingSite_Projekt.Models;
 using Dating_data.Repository;
@@ -17,21 +16,23 @@ namespace DatingSite_Projekt.Controllers
     [Authorize]
     public class AccountController : Controller
     {
-        
-        public ActionResult Profile()
+
+        public new ActionResult Profile()
         {
 
             //fyller i informationen i en model för den nuvarande inloggade användern med hjälp av namnet på kakan
-            var model = new AccountUserModel();
-            model.Username = UserRepositories.GetUserName(IdentityHelper.CurrentUserId());
             var results = DescriptionRepository.GetDescription(IdentityHelper.CurrentUserId());
-            int age = results.Age ?? default(int);
-            model.Description = results.Description1;
-            model.AboutMe = results.AboutMe;
-            model.Age = age; 
-            model.City = results.City;
-            model.Country = results.Country;
-            model.Email = results.Email;
+            var model = new AccountUserModel
+            {
+                Username = UserRepositories.GetUserName(IdentityHelper.CurrentUserId()),
+                Description = results.Description1,
+                AboutMe = results.AboutMe,
+                Age = results.Age ?? default(int),
+                City = results.City,
+                Country = results.Country,
+                Email = results.Email
+            };
+
 
             var messageList = new List<MessageModel>();
             var tempListMessage = MessageRepository.GetMessageList(IdentityHelper.CurrentUserId());
@@ -47,7 +48,7 @@ namespace DatingSite_Projekt.Controllers
             ViewData["senderId"] = IdentityHelper.CurrentUserId();
             return View(model);
         }
-        
+
         public ActionResult Friends()
         {
 
@@ -62,26 +63,28 @@ namespace DatingSite_Projekt.Controllers
             return View(friendList);
         }
 
-        
+
         public ActionResult FriendRequest()
         {
-            
+
             var friendRequests = FriendsRepository.GetFriendRequest(IdentityHelper.CurrentUserId());
-            List<FriendRequestModel> friendRequestModels = new List<FriendRequestModel>();
+            var friendRequestModels = new List<FriendRequestModel>();
             foreach (var f in friendRequests)
             {
-                var friend = new FriendRequestModel();
-                friend.senderId = f.User1;
-                friend.userId = IdentityHelper.CurrentUserId();
-                friend.senderName = UserRepositories.GetUserName(friend.senderId);
+                var friend = new FriendRequestModel
+                {
+                    senderId = f.User1,
+                    userId = IdentityHelper.CurrentUserId(),
+                    senderName = UserRepositories.GetUserName(f.User1)
+                };
                 friendRequestModels.Add(friend);
-                
+
             }
-            
+
             return View(friendRequestModels);
         }
 
-      
+
         public ActionResult LogOut()
         {
             FormsAuthentication.SignOut();
@@ -105,43 +108,45 @@ namespace DatingSite_Projekt.Controllers
                 var allowedExtensions = new[] { ".jpg", ".JPG", ".jpeg" };
                 if (!allowedExtensions.Contains(extension))
                 {
-                    
+
                     TempData["failed/succeded"] = "Upload failed! Only .jpg filetypes allowed!";
                     RedirectToAction("Edit", "Account", ModelState);
                 }
                 else
-                { 
-                //om allt gått bra så sparas filen lokalt med variabeln path som sökväg
-                TempData["failed/succeded"] = "Upload was successful";
-                file.SaveAs(path);
+                {
+                    //om allt gått bra så sparas filen lokalt med variabeln path som sökväg
+                    TempData["failed/succeded"] = "Upload was successful";
+                    file.SaveAs(path);
                 }
             }
 
 
             return RedirectToAction("Edit", "Account");
-        
+
         }
 
 
         public ActionResult Edit()
         {
-            
-            var model = new AccountUserModel();
+
             var results = DescriptionRepository.GetDescription(IdentityHelper.CurrentUserId());
-            int age = results.Age ?? default(int);
-            model.Description = results.Description1;
-            model.AboutMe = results.AboutMe;
-            model.Age = age; 
-            model.City = results.City;
-            model.Country = results.Country;
-            model.Email = results.Email;
+
+            var model = new AccountUserModel()
+            {
+                Age = results.Age ?? default(int),
+                Description = results.Description1,
+                AboutMe = results.AboutMe,
+                City = results.City,
+                Country = results.Country,
+                Email = results.Email
+            };
 
             //ifall en TempData skickats med från uppladdningsmetoden skickas den vidare till vyn med en ViewData av typen string
             if (TempData["failed/succeded"] != null)
             {
                 ViewData["UploadMessage"] = TempData["failed/succeded"] as string;
             }
-            
+
             return View(model);
         }
 
@@ -149,13 +154,23 @@ namespace DatingSite_Projekt.Controllers
         [HttpPost]
         public ActionResult Edit(AccountUserModel model)
         {
-            
+
             if (!ModelState.IsValid)
             {
                 return View();
             }
-            
-            DescriptionRepository.InsertNewDescription(model.Description, model.AboutMe, model.Country, model.City, model.Email, model.Age, IdentityHelper.CurrentUserId());
+
+            var description = new Description()
+            {
+                Description1 = model.Description,
+                AboutMe = model.AboutMe,
+                Country = model.Country,
+                City = model.City,
+                Email = model.Email,
+                Age = model.Age,
+                UserId = IdentityHelper.CurrentUserId()
+            };
+            DescriptionRepository.InsertNewDescription(description);
             UserRepositories.SetUserSearchable(model.Searchable, IdentityHelper.CurrentUserId());
             ViewData["Success"] = "Changes to your profile has been made!";
             return View();
@@ -168,7 +183,7 @@ namespace DatingSite_Projekt.Controllers
             return View();
         }
 
-       
+
         [HttpPost]
         public ActionResult EditUserInfo(AccountUserInfoModel model)
         {
@@ -176,7 +191,7 @@ namespace DatingSite_Projekt.Controllers
             var userId = IdentityHelper.CurrentUserId();
             var currentUserPassword = UserRepositories.GetPasswordForUser(userId);
             var comparison = UserRepositories.GetUsers();
-            
+
             if (!ModelState.IsValid)
             {
                 return View();
@@ -221,9 +236,15 @@ namespace DatingSite_Projekt.Controllers
                 return View(model);
             }
 
-          
+            var userChanges = new User()
+            {
+                Password = model.NewPassword,
+                Username = model.NewUsername,
+                Id = userId
+            };
+
             ModelState.AddModelError("", "Username and Password or just password has been updated!");
-            UserRepositories.SetUserChanges(model.NewPassword, model.NewUsername, userId);
+            UserRepositories.SetUserChanges(userChanges);
             return View(model);
         }
 
@@ -238,18 +259,18 @@ namespace DatingSite_Projekt.Controllers
             }
 
             int? userId = id;
-            var usersPage = new AccountUserModel();
             var results = DescriptionRepository.GetDescription(userId);
+            var usersPage = new AccountUserModel()
+            {
 
-                int age = results.Age ?? default(int);
-                usersPage.Description = results.Description1;
-                usersPage.AboutMe = results.AboutMe;
-                usersPage.Age = age;
-                usersPage.City = results.City;
-                usersPage.Country = results.Country;
-                usersPage.Email = results.Email;
-                usersPage.Username = UserRepositories.GetUserName(id);
-
+                Age = results.Age ?? default(int),
+                Description = results.Description1,
+                AboutMe = results.AboutMe,
+                City = results.City,
+                Country = results.Country,
+                Email = results.Email,
+                Username = UserRepositories.GetUserName(id)
+            };
 
                 //skapar en lista av MessageModel och fyller den med alla meddelanden som tillhör id't som skickats med
                 var messageList = new List<MessageModel>();
@@ -277,7 +298,7 @@ namespace DatingSite_Projekt.Controllers
             return View();
         }
 
-      
+
         [HttpPost]
         public ActionResult SearchUsers(SearchModel model)
         {
@@ -313,7 +334,7 @@ namespace DatingSite_Projekt.Controllers
             TempData["resultData"] = result;
             return RedirectToAction("SearchUserResult", "Account");
         }
-       
+
 
         public ActionResult SearchUserResult()
         {
@@ -322,7 +343,7 @@ namespace DatingSite_Projekt.Controllers
             return View(results);
         }
 
-        
+
 
     }
 }

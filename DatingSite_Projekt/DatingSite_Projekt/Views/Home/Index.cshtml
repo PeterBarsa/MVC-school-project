@@ -1,8 +1,13 @@
-﻿@using DatingSite_Projekt.Api
+﻿@using DatingSite_Projekt.Models
+@model IEnumerable<AccountUserModel>
 
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var profile1ImagePath = @Model.ElementAt(0).Username + ".jpg";
+    var profile2ImagePath = @Model.ElementAt(1).Username + ".jpg";
+    var profile3ImagePath = @Model.ElementAt(2).Username + ".jpg";
+    var profile4ImagePath = @Model.ElementAt(3).Username + ".jpg";
 }
 <br />
 <!-- Page Content -->
@@ -21,7 +26,7 @@
     <!-- Title -->
     <div class="row">
         <div class="col-lg-12">
-            <h3>Latest registered members:</h3>
+            <h3>Members:</h3>
         </div>
     </div>
     <!-- /.row -->
@@ -30,12 +35,12 @@
 
         <div class="col-md-3 col-sm-6 hero-feature">
             <div class="thumbnail">
-                <img src="/Images/Profile/Andreas.jpg" class="img-rounded" alt="">
+                <img src="/Images/Profile/@profile1ImagePath" class="img-rounded" alt="">
                 <div class="caption">
-                    <h3>Andreas, 12</h3>
-                    <p>2cool4school</p>
+                    <h3>@Model.ElementAt(0).Username, @Model.ElementAt(0).Age</h3>
+                    <p>@Model.ElementAt(0).AboutMe</p>
                     <p>
-                        <a href="/account/Details/4" class="btn btn-primary">Go to profile</a>
+                        <a href="/account/Details/@Model.ElementAt(0).UserId" class="btn btn-primary">Go to profile</a>
                     </p>
                 </div>
             </div>
@@ -43,12 +48,12 @@
 
         <div class="col-md-3 col-sm-6 hero-feature">
             <div class="thumbnail">
-                <img src="/Images/Profile/Paul.jpg" class="img-rounded" alt="">
+                <img src="/Images/Profile/@profile2ImagePath" class="img-rounded" alt="">
                 <div class="caption">
-                    <h3>Paul, 27</h3>
-                    <p>Ska du ge fan i.</p>
+                    <h3>@Model.ElementAt(1).Username, @Model.ElementAt(1).Age</h3>
+                    <p>@Model.ElementAt(1).AboutMe</p>
                     <p>
-                        <a href="/account/Details/3" class="btn btn-primary">Go to profile</a>
+                        <a href="/account/Details/@Model.ElementAt(1).UserId" class="btn btn-primary">Go to profile</a>
                     </p>
                 </div>
             </div>
@@ -56,12 +61,12 @@
 
         <div class="col-md-3 col-sm-6 hero-feature">
             <div class="thumbnail">
-                <img src="/Images/Profile/PeterB.jpg" class="img-rounded" alt="">
+                <img src="/Images/Profile/@profile3ImagePath" class="img-rounded" alt="">
                 <div class=" caption">
-                    <h3>PeterB, 25</h3>
-                    <p>Likes to walk on the beach and sleep with goats.</p>
+                    <h3>@Model.ElementAt(2).Username, @Model.ElementAt(2).Age</h3>
+                    <p>@Model.ElementAt(2).AboutMe</p>
                     <p>
-                        <a href="/account/Details/2" class="btn btn-primary">Go to profile</a>
+                        <a href="/account/Details/@Model.ElementAt(2).UserId" class="btn btn-primary">Go to profile</a>
                     </p>
                 </div>
             </div>
@@ -69,12 +74,12 @@
 
         <div class="col-md-3 col-sm-6 hero-feature">
             <div class="thumbnail">
-                <img src="/Images/Profile/Admin.jpg" class="img-rounded" alt="">
+                <img src="/Images/Profile/@profile4ImagePath" class="img-rounded" alt="">
                 <div class="caption">
-                    <h3>Admin, 25 </h3>
-                    <p>Big baws.</p>
+                    <h3>@Model.ElementAt(3).Username, @Model.ElementAt(3).Age</h3>
+                    <p>@Model.ElementAt(3).AboutMe</p>
                     <p>
-                        <a href="/account/Details/1" class="btn btn-primary">Go to profile</a>
+                        <a href="/account/Details/@Model.ElementAt(3).UserId" class="btn btn-primary">Go to profile</a>
                     </p>
                 </div>
             </div>
