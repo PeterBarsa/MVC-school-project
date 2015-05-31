@@ -6,7 +6,7 @@
 
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Home";
     Layout = "~/Views/Shared/_LayoutAccount.cshtml";
 }
 @{
@@ -84,7 +84,7 @@
                     {
                         foreach (var m in messages)
                         {
-                            <li> @Html.ActionLink(@m.SenderName, "Details", "Account", new { id = @m.SenderId }, null) </li>
+                            <li> @Html.ActionLink(@m.SenderName, "Friends", "Account", new { id = @m.SenderId }, null) </li>
                             <p>@m.Message</p>
                         }
                     }

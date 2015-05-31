@@ -224,9 +224,9 @@
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\Account\Profile.cshtml" />
     <Content Include="Views\Shared\_LayoutAccount.cshtml" />
-    <Content Include="Views\Account\Friends.cshtml" />
+    <Content Include="Views\Account\FriendList.cshtml" />
     <Content Include="Views\Account\FriendRequest.cshtml" />
-    <Content Include="Views\Account\Details.cshtml" />
+    <Content Include="Views\Account\Friends.cshtml" />
     <Content Include="Views\Account\Edit.cshtml" />
     <Content Include="Views\Account\EditUserInfo.cshtml" />
     <Content Include="Views\Account\SearchUsers.cshtml" />

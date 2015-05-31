@@ -31,10 +31,11 @@
 
         @foreach (var u in @Model)
         {
-            var profileImagePath = @u.Username + ".jpg";
+            var profileImagePath = "/Images/Profile/" + @u.Username + ".jpg";
+            profileImagePath = File.Exists(Server.MapPath(profileImagePath)) ? profileImagePath : "/Images/Profile/noimage.jpg";
             <div class="col-md-3 col-sm-6">
                 <div class="thumbnail">
-                    <img src="/Images/Profile/@profileImagePath" class="img-rounded" alt="">
+                    <img src="@profileImagePath" class="img-rounded">
                     <div class="caption">
                         <h3> @u.Username, @u.Age</h3>
                         <p>@u.AboutMe</p>

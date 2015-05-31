@@ -7,7 +7,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>@ViewBag.Title</title>
     <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/bootstrap.css" rel="stylesheet" type="text/css" />
     <script src="~/Scripts/modernizr-2.8.3.js"></script>
@@ -23,7 +23,7 @@
                     <span class="icon-bar"></span>
                 </button>
                 @Html.ActionLink("Home", "Profile", "Account", new { area = "" }, new { @class = "navbar-brand" })
-                @Html.ActionLink("Friends", "Friends", "Account", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Friends", "FriendList", "Account", new { area = "" }, new { @class = "navbar-brand" })
                 @if (FriendRequestHelper.FriendRequestStatus())
                 {
                     @Html.ActionLink("Friend Requests", "FriendRequest", "Account", new { area = "" }, new { @class = "navbar-brand", Style = "color:red" })

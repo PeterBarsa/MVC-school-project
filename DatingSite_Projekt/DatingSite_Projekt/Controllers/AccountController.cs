@@ -49,7 +49,7 @@ namespace DatingSite_Projekt.Controllers
             return View(model);
         }
 
-        public ActionResult Friends()
+        public ActionResult FriendList()
         {
 
             var friendList = new List<FriendsModel>();
@@ -249,7 +249,7 @@ namespace DatingSite_Projekt.Controllers
         }
 
 
-        public ActionResult Details(int id)
+        public ActionResult Friends(int id)
         {
 
             //ifall medskickade id't är den nuvarande användarens id skickas man till sin egen profil.
