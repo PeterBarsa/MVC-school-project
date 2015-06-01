@@ -19,14 +19,22 @@ namespace DatingSite_Projekt.Controllers
         {
 
             var userList = UserRepositories.GetUsers();
-            var frontList = new List<AccountUserModel>();
-            var r = new Random();
+            var frontList = RandomFourMembers(userList);
+
+           
+            return View(frontList);
+        }
+
+        private static List<AccountUserModel> RandomFourMembers(List<User> userList)
+        {
             var added = new List<int>();
+            var resultList = new List<AccountUserModel>();
 
             //loopar igenom tills 4 olika användare har hämtats som skickas till vyn
             do
             {
-
+                
+                var r = new Random();
                 var user = userList[r.Next(userList.Count)];
                 if (added.Contains(user.Id))
                 {
@@ -43,12 +51,14 @@ namespace DatingSite_Projekt.Controllers
                         Age = descriptionForUser.Age ?? default(int),
                         UserId = user.Id
                     };
-                    frontList.Add(userModel);
+                    resultList.Add(userModel);
                     added.Add(user.Id);
                 }
-            } 
-            while (frontList.Count < 4);
-            return View(frontList);
+                
+            }
+            while (resultList.Count < 4);
+
+            return resultList;
         }
 
         public ActionResult Login()

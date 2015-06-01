@@ -13,24 +13,29 @@ namespace DatingSite_Projekt.Api
 {
     public class FriendController : ApiController
     {
-        
-        
-            [HttpPost]
-            public void PostFriendRequest(FriendRequestModel friend)
-            {
 
-            int receiverId = friend.userId;
-            int senderId = friend.senderId;
+
+        [HttpPost]
+        public void PostFriendRequest(FriendRequestModel friend)
+        {
+
+            var receiverId = friend.userId;
+            var senderId = friend.senderId;
             FriendsRepository.NewFriendRequest(senderId, receiverId);
 
-            }
-
-        public void AcceptFriendReqest(FriendRequestModel friend)
-        {
-            int receiverId = IdentityHelper.CurrentUserId();
-            int senderId = friend.senderId;
-            FriendsRepository.AcceptFriend(senderId, receiverId);
         }
-        
+
+        public void AcceptFriendRequest(FriendRequestModel friend)
+        {
+            var receiverId = IdentityHelper.CurrentUserId();
+            FriendsRepository.AcceptFriend(friend.senderId, receiverId);
+        }
+
+        public void DenyFriendRequest(FriendRequestModel friend)
+        {
+            var receiverId = IdentityHelper.CurrentUserId();
+            
+        }
+
     }
 }

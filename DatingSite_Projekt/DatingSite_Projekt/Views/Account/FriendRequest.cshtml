@@ -7,16 +7,25 @@
 <h2>FriendRequests</h2>
 <script type="text/javascript">
 
-    $(document).on('click', '#add', function () {
+
+    $(document).on('click', '#add', function() {
         var senderId = document.getElementById('add').value;
-        $.post('/api/friend/AcceptFriendReqest', { senderId: senderId }, function () {
+        $.post('/api/friend/AcceptFriendRequest', { senderId: senderId }, function() {
             alert("Friendrequest accepted");
             window.location.reload();
         });
 
-        })</script>
+    });
+    $(document).on('click', '#deny', function() {
+        var senderId = document.getElementById('add').value;
+        $.post('/api/friend/DenyFriendRequest', { senderId: senderId }, function() {
+            alert("Friendrequest denied");
+            window.location.reload();
+        });
+
+    });</script>
 <ul>
     @foreach (var user in Model)
     {
-    <li> @Html.ActionLink(@user.senderName, "Details", "Account", new { id = @user.senderId }, null) <button id="add" value="@user.senderId">Add Friend</button> </li>}
+    <li> @Html.ActionLink(@user.senderName, "Friends", "Account", new { id = @user.senderId }, null) <button id="add" value="@user.senderId">Add</button> <button id="deny" value="@user.senderId">Deny</button> </li>}
 </ul>
