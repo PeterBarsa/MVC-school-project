@@ -16,19 +16,8 @@ namespace Dating_data.Repository
             using (var context = new MainDBContext())
             {
                 var friendRequestList = new List<Friend>(context.Friends.Where(x => x.User2 == userId).Select(x => x));
-                List<Friend> result = new List<Friend>();
 
-                foreach (var f in friendRequestList)
-                {
-
-                    //ifall status på vännen INTE är true, dvs. det är fortfarande en förfrågan så läggs objektet in i resultat listan
-                    if (!f.status == true)
-                    {
-                        result.Add(f);
-                    }
-                }
-
-                return result;
+                return friendRequestList.Where(f => !f.status == true).ToList();
             }
 
 
@@ -45,40 +34,17 @@ namespace Dating_data.Repository
                 //vänners id som hämtas ut från dessa två listor
                 var friendList1 = new List<Friend>(context.Friends.Where(x => x.User2 == userId).Select(x => x));
                 var friendList2 = new List<Friend>(context.Friends.Where(x => x.User1 == userId).Select(x => x));
-                var idListComplete = new List<int>();
+                var idListComplete = (from f in friendList1 where !f.status == false select f.User1).ToList();
                 
                 //lägger till alla vänner i friendList1 som inte har status false, dvs. är en vän och inte en vänförfrågan
-                foreach (var f in friendList1)
-                {
-                    if (!f.status == false)
-                    {
-                        idListComplete.Add(f.User1);
-                    }
-
-
-                }
 
                 //lägger till alla vänner i friendList2 som inte har status false
-                foreach (var f in friendList2)
-                {
-                    if (!f.status == false)
-                    {
-                        idListComplete.Add(f.User2);
-                    }
-
-
-                }
+                idListComplete.AddRange(from f in friendList2 where !f.status == false select f.User2);
 
                 //skapar en lista av typen User vid namn result som skall returneras och fylls på med alla användare
                 //vars id finns med i idListComplete
-                var result = new List<User>();
-                foreach (var id in idListComplete)
-                {
-                    var user = context.Users.FirstOrDefault(x => x.Id == id);
-                    result.Add(user);
-                }
 
-                return result;
+                return idListComplete.Select(id => context.Users.FirstOrDefault(x => x.Id == id)).ToList();
             }
         }
 
